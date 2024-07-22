@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Modifier une Commande</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 20px;
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+        label {
+            margin-top: 10px;
+        }
+        input[type="text"], input[type="date"], input[type="number"], input[type="email"] {
+            padding: 10px;
+            margin-top: 5px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+        button {
+            padding: 10px 15px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            font-size: 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            margin-top: 20px;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        a {
+            display: inline-block;
+            margin-top: 10px;
+            color: #007bff;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+    <script>
+        function validateForm() {
+            var dateCommande = document.getElementById("id_date_commande").value;
+            var nomClient = document.getElementById("id_nom_client").value;
+            var montantTotal = document.getElementById("id_montant_total").value;
+          
+
+            if (!dateCommande) {
+                alert("La date de commande est obligatoire.");
+                return false;
+            }
+            if (!nomClient) {
+                alert("Le nom du client est obligatoire.");
+                return false;
+            }
+            if (!montantTotal || montantTotal <= 0) {
+                alert("Le montant total doit être un nombre positif.");
+                return false;
+            }
+           
+            return true;
+        }
+    </script>
+</head>
+<body>
+    <div class="container">
+        <h1>Modifier une Commande</h1>
+        <form method="post" onsubmit="return validateForm()">
+            {% csrf_token %}
+            <label for="id_date_commande">Date de Commande:</label>
+            <input type="date" id="id_date_commande" name="date_commande" value="{{ commande.date_commande }}">
+
+            <label for="id_nom_client">Nom du Client:</label>
+            <input type="text" id="id_nom_client" name="nom_client" value="{{ commande.nom_client }}">
+
+            <label for="id_montant_total">Montant Total:</label>
+            <input type="number" id="id_montant_total" name="montant_total" step="0.01" value="{{ commande.montant_total }}">
+
+           
+
+            <button type="submit">Modifier</button>
+        </form>
+        <a href="{% url 'liste_commandes' %}">Retour à la liste des commandes</a>
+    </div>
+</body>
+</html>

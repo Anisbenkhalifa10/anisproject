@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Liste des Fournisseurs</title>
+       <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+   
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 20px;
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+        th, td {
+            padding: 10px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        a.button {
+            display: inline-block;
+            padding: 10px 15px;
+            border-radius: 4px;
+            transition: background-color 0.3s ease;
+        }
+        a.button:hover {
+            text-decoration: none;
+        }
+        .ajouter-button {
+            background-color: #28a745;
+            color: #fff;
+        }
+        .ajouter-button:hover {
+            background-color: #218838;
+        }
+        .modifier-button {
+            background-color: #007bff;
+            color: #fff;
+        }
+        .modifier-button:hover {
+            background-color: #0056b3;
+        }
+        .supprimer-button {
+            background-color: #dc3545;
+            color: #fff;
+        }
+        .supprimer-button:hover {
+            background-color: #c82333;
+        }
+    </style>
+</head>
+<body>
+<!-- Barre de navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <a class="navbar-brand" href="{% url 'home' %}">Mon Projet</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+                <li class="nav-item active">
+                    <a class="nav-link" href="{% url 'home' %}">Accueil</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'liste_produits' %}">Produits</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'liste_fournisseurs' %}">fournisseur</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'liste_utilisateurs' %}">utilisateur</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'liste_commandes' %}">commande</a>
+                        
+                </li>
+                 <li class="nav-item">
+                    <a class="nav-link" href="{% url 'liste_detail_commandes' %}">detail commande</a>
+                        
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+ 
+
+    <!-- Scripts JavaScript pour Bootstrap (nécessaire pour le fonctionnement du Navbar) -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+   <!-- Contenu principal de la page -->
+  
+<br> <br>
+    <div class="container">
+        <h1>Liste des Fournisseurs</h1>
+        <a class="button ajouter-button" href="{% url 'ajouter_fournisseur' %}">Ajouter un Fournisseur</a>
+        <table>
+            <thead>
+                <tr>
+                    <th>id</th>
+                    <th>Nom</th>
+                    <th>Contact</th>
+                    <th>Téléphone</th>
+                    <th>Email</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for fournisseur in fournisseurs %}
+                    <tr>
+                    <td>{{ fournisseur.id }}</td>
+                        <td>{{ fournisseur.nom }}</td>
+                        <td>{{ fournisseur.contact }}</td>
+                        <td>{{ fournisseur.telephone }}</td>
+                        <td>{{ fournisseur.email }}</td>
+                        <td>
+                             <a class="button modifier-button" href="{% url 'modifier_fournisseur' fournisseur.id %}">Modifier</a>
+                           <a class="button supprimer-button" href="{% url 'supprimer_fournisseur' fournisseur.id %}">Supprimer</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

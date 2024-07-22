@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Modifier un Produit</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 20px;
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+        label {
+            margin-bottom: 10px;
+        }
+        input[type="text"], input[type="number"], textarea, input[type="file"] {
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 16px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+        button {
+            padding: 10px 15px;
+            background-color: #007bff;
+            border: none;
+            color: #fff;
+            font-size: 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        a {
+            display: inline-block;
+            margin-top: 10px;
+            text-decoration: none;
+            color: #007bff;
+            transition: color 0.3s ease;
+        }
+        a:hover {
+            color: #0056b3;
+        }
+        .current-image {
+            max-width: 100%;
+            height: auto;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Modifier le Produit "{{ produit.nom }}"</h1>
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <label for="id_nom">Nom :</label>
+            <input type="text" id="id_nom" name="nom" value="{{ produit.nom }}" required>
+            <label for="id_description">Description :</label>
+            <textarea id="id_description" name="description" rows="4" required>{{ produit.description }}</textarea>
+            <label for="id_prix">Prix :</label>
+            <input type="number" id="id_prix" name="prix" value="{{ produit.prix }}" step="0.01" required>
+            <label for="id_quantite">Quantité :</label>
+            <input type="number" id="id_quantite" name="quantite" value="{{ produit.quantite }}" required>
+            
+            {% if produit.image %}
+            <div>
+                <img src="{{ produit.image.url }}" alt="{{ produit.nom }}" class="current-image">
+                <p>Image actuelle : {{ produit.image.name }}</p>
+            </div>
+            {% endif %}
+            
+            <label for="id_image">Changer l'image :</label>
+            <input type="file" id="id_image" name="image">
+            <button type="submit">Enregistrer les modifications</button>
+        </form>
+        <a href="{% url 'liste_produits' %}">Annuler</a>
+    </div>
+</body>
+</html>

@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Ajouter un Détail de Commande</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+        label {
+            margin-bottom: 5px;
+            color: #555;
+        }
+        select, input[type="number"], input[type="submit"], a.button {
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 16px;
+            text-decoration: none;
+            display: inline-block;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            text-align: center;
+        }
+        input[type="submit"] {
+            background-color: #28a745;
+            color: #fff;
+            border: none;
+        }
+        input[type="submit"]:hover {
+            background-color: #218838;
+        }
+        a.button {
+            background-color: #dc3545;
+            color: #fff;
+            border: none;
+        }
+        a.button:hover {
+            background-color: #c82333;
+        }
+        .form-control {
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Ajouter un Détail de Commande</h1>
+        <form method="post">
+            {% csrf_token %}
+            <label for="id_commande">Commande:</label>
+            <select id="id_commande" name="id_commande" class="form-control">
+                {% for commande in commandes %}
+                    <option value="{{ commande.id }}">{{ commande.id }} - {{ commande.nom_client }}</option>
+                {% endfor %}
+            </select>
+            <label for="id_produit">Produit:</label>
+            <select id="id_produit" name="id_produit" class="form-control">
+                {% for produit in produits %}
+                    <option value="{{ produit.id }}">{{ produit.id }} - {{ produit.nom }}</option>
+                {% endfor %}
+            </select>
+            <label for="quantite">Quantité:</label>
+            <input type="number" id="quantite" name="quantite" class="form-control" required>
+            <label for="prix_unitaire">Prix Unitaire:</label>
+            <input type="number" id="prix_unitaire" name="prix_unitaire" class="form-control" step="0.01" required>
+            <input type="submit" value="Ajouter">
+            <a href="{% url 'liste_detail_commandes' %}" class="button">Annuler</a>
+        </form>
+    </div>
+</body>
+</html>

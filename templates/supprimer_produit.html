@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Supprimer un Produit</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 20px;
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            text-align: center;
+        }
+        form {
+            display: inline;
+        }
+        button {
+            padding: 10px 15px;
+            background-color: #dc3545;
+            border: none;
+            color: #fff;
+            font-size: 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            margin: 5px;
+        }
+        button:hover {
+            background-color: #c82333;
+        }
+        a {
+            display: inline-block;
+            padding: 10px 15px;
+            background-color: #007bff;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 4px;
+            transition: background-color 0.3s ease;
+            margin: 5px;
+        }
+        a:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Supprimer le Produit</h1>
+        <p>Êtes-vous sûr de vouloir supprimer le produit "{{ produit.nom }}" ?</p>
+       <script>
+    document.getElementById('supprimer_produit').onsubmit = function() {
+        return confirm("Êtes-vous sûr de vouloir supprimer ce produit ?");
+    };
+</script>
+        <form method="post">
+    {% csrf_token %}
+    <button type="submit">Confirmer</button>
+</form>
+        <a href="{% url 'liste_produits' %}">Annuler </a>
+    </div>
+</body>
+</html>

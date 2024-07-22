@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modifier un Utilisateur</title>
+    <style>
+        /* Reset CSS */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Body styles */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 20px;
+        }
+
+        /* Container styles */
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+
+        /* Heading styles */
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        /* Form styles */
+        form {
+            max-width: 400px;
+            margin: 0 auto;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        input[type="text"], input[type="email"], input[type="password"] {
+            width: 100%;
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        .radio-group {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 10px;
+        }
+
+        .radio-group label {
+            margin-right: 10px;
+        }
+
+        .error-message {
+            color: #dc3545;
+            font-size: 14px;
+            margin-top: 5px;
+        }
+
+        button {
+            padding: 10px 15px;
+            background-color: #007bff;
+            border: none;
+            color: #fff;
+            font-size: 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        .cancel-button {
+            padding: 10px 15px;
+            background-color: #dc3545;
+            border: none;
+            color: #fff;
+            font-size: 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            margin-left: 10px;
+        }
+
+        .cancel-button:hover {
+            background-color: #c82333;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Modifier un Utilisateur</h1>
+        <form method="post">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="id_nom_utilisateur">Nom d'utilisateur *</label>
+                <input type="text" id="id_nom_utilisateur" name="nom_utilisateur" value="{{ form.nom_utilisateur.value }}" required>
+                <div id="nomUtilisateurError" class="error-message"></div>
+            </div>
+            <div class="form-group">
+                <label for="id_mot_de_passe">Mot de passe *</label>
+                <input type="password" id="id_mot_de_passe" name="mot_de_passe" value="{{ form.mot_de_passe.value }}" required>
+                <div id="motDePasseError" class="error-message"></div>
+            </div>
+            <div class="form-group">
+                <label for="id_email">Email</label>
+                <input type="email" id="id_email" name="email" value="{{ form.email.value }}">
+                <div id="emailError" class="error-message"></div>
+            </div>
+            <div class="form-group">
+                <label>Rôle *</label>
+                <div class="radio-group">
+                    <label><input type="radio" name="role" value="admin" {% if form.role.value == 'admin' %}checked{% endif %} required> Admin</label>
+                    <label><input type="radio" name="role" value="utilisateur" {% if form.role.value == 'utilisateur' %}checked{% endif %} required> Utilisateur</label>
+                </div>
+                <div id="roleError" class="error-message"></div>
+            </div>
+            <button type="submit">Enregistrer</button>
+            <a href="{% url 'liste_utilisateurs' %}" class="cancel-button">Annuler</a>
+        </form>
+    </div>
+</body>
+</html>

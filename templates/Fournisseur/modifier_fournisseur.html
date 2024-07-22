@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Modifier un Fournisseur</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 20px;
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+        form {
+            max-width: 400px;
+            margin: 0 auto;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        input[type="text"], input[type="email"] {
+            width: 100%;
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        .error-message {
+            color: #dc3545;
+            font-size: 14px;
+            margin-top: 5px;
+        }
+        button {
+            padding: 10px 15px;
+            font-size: 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            width: 100px;
+            margin-right: 10px;
+        }
+        button#enregistrer {
+            background-color: #007bff;
+            border: none;
+            color: #fff;
+        }
+        button#enregistrer:hover {
+            background-color: #0056b3;
+        }
+        a#annuler {
+            background-color: #dc3545;
+            color: #fff;
+            padding: 10px 15px;
+            text-decoration: none;
+            border-radius: 4px;
+            transition: background-color 0.3s ease;
+        }
+        a#annuler:hover {
+            background-color: #c82333;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Modifier un Fournisseur ( {{ fournisseurs.nom }})</h1>
+        <form id="modificationForm" method="post">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="id_nom">Nom *</label>
+                <input type="text" id="id_nom" name="nom" value="{{ fournisseurs.nom }}" required>
+                <div id="nomError" class="error-message"></div>
+            </div>
+            <div class="form-group">
+                <label for="id_contact">Contact</label>
+                <input type="text" id="id_contact" name="contact" value="{{ fournisseurs.contact }}">
+            </div>
+            <div class="form-group">
+                <label for="id_telephone">Téléphone</label>
+                <input type="text" id="id_telephone" name="telephone" value="{{ fournisseurs.telephone }}">
+            </div>
+            <div class="form-group">
+                <label for="id_email">Email *</label>
+                <input type="email" id="id_email" name="email" value="{{ fournisseurs.email }}" required>
+                <div id="emailError" class="error-message"></div>
+            </div>
+            <button type="submit" id="enregistrer">Enregistrer</button>
+            <a href="{% url 'liste_fournisseurs' %}" id="annuler">Annuler</a>
+        </form>
+    </div>
+
+    <script>
+        document.getElementById('modificationForm').addEventListener('submit', function(event) {
+            // Validation des champs obligatoires
+            var nom = document.getElementById('id_nom').value.trim();
+            var email = document.getElementById('id_email').value.trim();
+            var nomError = document.getElementById('nomError');
+            var emailError = document.getElementById('emailError');
+            var isValid = true;
+
+            if (nom === '') {
+                nomError.innerHTML = 'Le nom est obligatoire.';
+                isValid = false;
+            } else {
+                nomError.innerHTML = '';
+            }
+
+            // Validation de l'email
+            if (email !== '') {
+                var emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                if (!emailPattern.test(email)) {
+                    emailError.innerHTML = 'L\'email n\'est pas valide.';
+                    isValid = false;
+                } else {
+                    emailError.innerHTML = '';
+                }
+            } else {
+                emailError.innerHTML = 'L\'email est obligatoire.';
+                isValid = false;
+            }
+
+            // Empêche l'envoi du formulaire si la validation échoue
+            if (!isValid) {
+                event.preventDefault();
+            }
+        });
+    </script>
+</body>
+</html>
